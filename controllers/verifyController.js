@@ -7,7 +7,7 @@ const validate = (value, rules) => {
     let isValid = true;
     for (let rule in rules) {
         switch (rule) {
-            case 'isValidPhone': isValid = isValid && () && validatePhoneNumber(value); break;
+            case 'isValidPhone': isValid = isValid && validatePhoneNumber(value); break;
             case 'isRequired': isValid = isValid && requiredValidator(value); break;
             default: isValid = true;
         }
@@ -26,7 +26,6 @@ const validatePhoneNumber = (number) => {
 const requiredValidator = (value) => {
     return value.trim() !== '';
 }
-
 export default validate;
 
 
