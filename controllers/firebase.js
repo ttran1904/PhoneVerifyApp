@@ -1,61 +1,84 @@
 import React from "react";
 import Firebase from "firebase";
 import config from "./config";
+import verifyController from "../controllers/verifyController";
 
 class Firebase extends React.Component {
-    writeUserData = () => {
+    /** Firebase Constructor.*/
+    constructor(props) {
+        super(props);
+        Firebase.initializeApp(config);
+        this.state = {
+            phoneData: []
+        };
+    }
+
+    /** Handle input from App.*/
+    handle (pno, code, showCode) {
+        if (!this.state.showCode) {
+            const { phoneData } = this.state;
+            const acode = verifyController.CreateNewAccessCode(pno);
+                phoneData.push({input: pno, acode});
+            this.setState({ phoneData });
+            this.writePhoneData();
+        } else {
+            if (verifyController.Validate) {
+
+            }
+        }
+    }
+
+    /** Save phone data into Firebase.*/
+    writePhoneData = () => {
         Firebase.database()
             .ref("/")
             .set(this.state);
-        console.log("User data save");
     };
 
-    getUserData = () => {
+    /** Get phone data from Firebase.*/
+    getPhoneData = () => {
         let ref = Firebase.database().ref("/");
         ref.on("value", snapshot => {
             const state = snapshot.val();
             this.setState(state);
         });
     };
-
-    handleSubmit = event => {
-        event.preventDefault();
-        let name = this.refs.name.value;
-        let role = this.refs.role.value;
-        let uid = this.refs.uid.value;
-
-        if (uid && name && role) {
-            const { developers } = this.state;
-            const devIndex = developers.findIndex(data => {
-                return data.uid === uid;
-            });
-            developers[devIndex].name = name;
-            developers[devIndex].role = role;
-            this.setState({ developers });
-        } else if (name && role) {
-            const uid = new Date().getTime().toString();
-            const { developers } = this.state;
-            developers.push({ uid, name, role });
-            this.setState({ developers });
-        }
-
-        this.refs.name.value = "";
-        this.refs.role.value = "";
-        this.refs.uid.value = "";
-    };
-
-    removeData = developer => {
-        const { developers } = this.state;
-        const newState = developers.filter(data => {
-            return data.uid !== developer.uid;
+    /** Get phone number.*/
+    getPhoneNumber = (pno) => {
+        let ref = Firebase.database().ref("/");
+        ref.on("value", snapshot => {
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
+            }
+            const state = snapshot.val();
+            this.setState(state);
         });
-        this.setState({ developers: newState });
     };
 
-    updateData = developer => {
-        this.refs.uid.value = developer.uid;
-        this.refs.name.value = developer.name;
-        this.refs.role.value = developer.role;
+    /** Get data.*/
+    componentDidMount() {
+        this.getPhoneData();
+    }
+    /** Update when state is change.*/
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState !== this.state) {
+            this.writePhoneData();
+        }
+    }
+
+    removeData = (pno) => {
+        const { phoneData } = this.state;
+        const newState = phoneData.filter(data => {
+            return data.uid !== pno.uid;
+        });
+        this.setState({ phoneData: newState });
     };
-}
+
+    updateData = (pno) => {
+        this.refs.uid.value = pno.uid;
+        this.refs.name.value = pno.name;
+        this.refs.role.value = pno.role;
+    };
+
+} export default Firebase;
 

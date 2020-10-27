@@ -11,12 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de9f36e8-d08e-4322-9791-e6ac19032e94" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/firebase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/firebase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/verifyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/verifyController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +83,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604206738475</updated>
-      <workItem from="1604208967029" duration="11444000" />
+      <workItem from="1604208967029" duration="18049000" />
     </task>
     <servers />
   </component>
@@ -123,5 +122,9 @@
       <screen x="0" y="23" width="1280" height="743" />
     </state>
     <state x="305" y="185" key="run.anything.popup/0.23.1280.743@0.23.1280.743" timestamp="1604217067417" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1604235485477">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1604235485477" />
   </component>
 </project>

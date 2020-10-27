@@ -3,18 +3,18 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import IconButton from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import axios from 'axios';
+import Firebase from '../controllers/firebase';
+import validate from "../controllers/verifyController";
 const verifyController = require('../controllers/verifyController');
 
 
 class App extends Component {
-
+  /** Main App Constructor.*/
   constructor() {
     super();
 
     this.state = {
       showCode: false,
-
       formIsValid: false,
       formControls: {
         phoneNumber: {
@@ -35,34 +35,35 @@ class App extends Component {
     }
   }
 
-  _getCode = async() => {
-    const e = this.state.code+this.state.pno;
-    await axios.get("http://localhost:3000/process/getaccesscode", {
-      params: {
-        phonenumber: e,
-        channel: 'sms'
-      }
-    })
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
-  };
+  // // TODO: Determine functionality or if is necessary
+  // _getCode = async() => {
+  //   const e = this.state.code+this.state.pno;
+  //   await axios.get("http://localhost:3000/process/getaccesscode", {
+  //     params: {
+  //       phoneNumber: e,
+  //       channel: 'sms'
+  //     }
+  //   })
+  //       .then(data => console.log(data))
+  //       .catch(err => console.log(err));
+  // };
+  //
+  // _verifyCode = async () => {
+  //   const e = this.state.code+this.state.pno;
+  //   await axios.get("http://localhost:3000/process/validateaccesscode", {
+  //     params: {
+  //       phoneNumber: e,
+  //       code: this.state.otp
+  //     }
+  //   })
+  //       .then(data => console.log(data))
+  //       .catch(err => console.log(err));
+  // }
 
-  _verifyCode = async () => {
-    const e = this.state.code+this.state.pno;
-    await axios.get("http://localhost:3000/process/validateaccesscode", {
-      params: {
-        phonenumber: e,
-        code: this.state.otp
-      }
-    })
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
-  }
-
+  /** Change handler when update each input.*/
   changeHandler = event => {
     const phoneNumber = event.target.phoneNumber;
     const value = event.target.value;
-
     const updatedControls = {
       ...this.state.formControls
     };
@@ -80,10 +81,22 @@ class App extends Component {
     });
   }
 
-  formSubmitHandler = () => {
+  /** Form submit handler. Send to Firebase to check, too.*/
+  formSubmitHandler = (event) => {
+    event.preventDefault();
+    let pno = this.state.refs.phoneNumber.value;
+    let code = this.state.refs.accessCode.value;
+    if (!this.state.showCode) {
+      Firebase.handle(pno, null, this.state.showCode);
+    } else {
+      Firebase.handle(pno.code, this.state.showCode)
+    }
     console.dir(this.state.formControls);
   }
 
+
+
+  /** HTML Render.*/
   render() {
     return (
         <View style = {styles.container}>
@@ -98,6 +111,8 @@ class App extends Component {
           {!this.state.showCode?
               <TextInput type = "text"
                          name = "phoneNumber"
+                         ref="phoneNumber"
+                         className="form-control"
                          value={this.state.formControls.phoneNumber.value}
                          onChange={this.changeHandler}
                          style = {styles.textInput}
@@ -107,8 +122,10 @@ class App extends Component {
                          :
               <TextInput type = "text"
                          name = "accessCode"
+                         ref="accessCode"
+                         className="form-control"
                          value={this.state.formControls.accessCode.value}
-                         onChange={this.state.formControls.accessCode.value}
+                         onChange={this.changeHandler}
                          style = {styles.textInput}
                          underlineColorAndroid = "transparent"
                          placeholder = "Enter Access Code"
