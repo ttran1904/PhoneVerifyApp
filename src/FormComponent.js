@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import TextInput from './TextInput';
 
 class FormComponent extends Component {
-
     constructor() {
         super();
-
         this.state = {
             formControls: {
-                phone: {
+                phoneNumber: {
                     value: '',
                     placeholder: 'Enter your phone number'
                 },
-                code : {
+                accessCode: {
                     value: ''
                 }
             }
@@ -20,22 +18,20 @@ class FormComponent extends Component {
     }
 
     changeHandler = event => {
-        const phone = event.target.phone;
+        const phoneNumber = event.target.phoneNumber;
         const value = event.target.value;
-
         this.setState({
             formControls: {
-                [phone]: value
+                [phoneNumber]: value
             }
         });
     }
 
     render() {
-
         return (
             <TextInput name="phone"
-                       placeholder={this.state.formControls.phone.placeholder}
-                       value={this.state.formControls.phone.value}
+                       placeholder={this.state.formControls.phoneNumber.placeholder}
+                       value={this.state.formControls.phoneNumber.value}
                        onChange={this.changeHandler}
             />
         );
