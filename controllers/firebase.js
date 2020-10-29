@@ -18,13 +18,11 @@ class Firebase extends React.Component {
         if (!this.state.showCode) {
             const { phoneData } = this.state;
             const acode = verifyController.CreateNewAccessCode(pno);
-                phoneData.push({input: pno, acode});
+                phoneData.push({'phoneNumber': pno, 'accessCode': acode});
             this.setState({ phoneData });
             this.writePhoneData();
         } else {
-            if (verifyController.Validate) {
-
-            }
+            verifyController.ValidateAccessCode(pno, code)
         }
     }
 
@@ -43,18 +41,6 @@ class Firebase extends React.Component {
             this.setState(state);
         });
     };
-    /** Get phone number.*/
-    getPhoneNumber = (pno) => {
-        let ref = Firebase.database().ref("/");
-        ref.on("value", snapshot => {
-            if (snapshot.exists()) {
-                const userData = snapshot.val();
-            }
-            const state = snapshot.val();
-            this.setState(state);
-        });
-    };
-
     /** Get data.*/
     componentDidMount() {
         this.getPhoneData();
@@ -65,7 +51,7 @@ class Firebase extends React.Component {
             this.writePhoneData();
         }
     }
-
+    /** Remove data*/
     removeData = (pno) => {
         const { phoneData } = this.state;
         const newState = phoneData.filter(data => {
@@ -73,12 +59,26 @@ class Firebase extends React.Component {
         });
         this.setState({ phoneData: newState });
     };
-
+    /** Update data*/
     updateData = (pno) => {
         this.refs.uid.value = pno.uid;
         this.refs.name.value = pno.name;
         this.refs.role.value = pno.role;
     };
 
-} export default Firebase;
+}
+
+/** Get access code from a phone number.*/
+const getAccessCode = (pno) => {
+    let ref = Firebase.database().ref("/");
+    ref.orderByChild("phoneNumber").equalTo(pno).on("value", snapshot => {
+        if (snapshot.exists()) {
+            return snapshot.val().accessCode.value;
+        } else {
+            alert("Phone number have not been input!")
+            return null;
+        }
+    });
+};
+export default Firebase;
 

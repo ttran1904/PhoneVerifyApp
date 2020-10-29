@@ -14,8 +14,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/firebase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/verifyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/verifyController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +81,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604206738475</updated>
-      <workItem from="1604208967029" duration="18049000" />
+      <workItem from="1604208967029" duration="20680000" />
     </task>
     <servers />
   </component>

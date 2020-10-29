@@ -1,4 +1,5 @@
 import validator from "validator";
+import Firebase from "./firebase";
 
 const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 
@@ -20,17 +21,25 @@ const validatePhoneNumber = (number) => {
     return validator.isMobilePhone(number)
 }
 
-/** Check to confirm that feild is required. */
+/** Check to confirm that feild is required.*/
 const requiredValidator = (value) => {
     return value.trim() !== '';
 }
 
-
+/** Validate the User-input access code.
+ * Also reset validation to empty string*/
 function ValidateAccessCode (phoneNumber, accessCode) {
-
+    if (!(Firebase.getAccessCode() == accessCode)) {
+        alert("Incorrect access code. Please try again!");
+        return {"success": true}
+    }
+    alert("Success: Your Phone is Verified!");
+    return {"success": false};
 }
 
-/** Create a store new access code.*/
+/** Create a store new access code.
+ * Additional function of saving to Fire base is
+ * passed on to the handle function in 'firebase.js'.*/
 function CreateNewAccessCode (phoneNumber) {
     if (!validatePhoneNumber(phoneNumber)) {
         alert("Please enter a valid phone number.")
