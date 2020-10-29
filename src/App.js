@@ -1,11 +1,15 @@
 import './App.css';
+import validate from "./controllers/verifyController";
+import Database from "./controllers/database";
+import axios from 'axios';
+
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
-import IconButton from '@material-ui/core';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {Paper, Button, IconButton, TextField} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Firebase from '../controllers/firebase';
-import validate from "../controllers/verifyController";
-const verifyController = require('../controllers/verifyController');
+
+import verifyController from './controllers/verifyController';
+import validator from "validator";
 
 
 class App extends Component {
@@ -16,69 +20,51 @@ class App extends Component {
     this.state = {
       showCode: false,
       formIsValid: false,
-      formControls: {
-        phoneNumber: {
-          value: '',
-          placeholder: 'Enter your phone number',
-          valid: false,
-          validationRules: {
-            isValidPhone: true,
-            isRequired: true
-          }
-        },
-        accessCode: {
-          value: '',
-          placeholder: 'Enter access code sent to your phone',
-          valid: false,
+      phoneNumber: {
+        value: '',
+        placeholder: 'Enter your phone number',
+        valid: false,
+        validationRules: {
+          isValidPhone: true,
+          isRequired: true
         }
+      },
+      accessCode: {
+        value: '',
+        placeholder: 'Enter access code sent to your phone',
+        valid: false,
       }
     }
   }
 
-  // // TODO: Determine functionality or if is necessary
-  // _getCode = async() => {
-  //   const e = this.state.code+this.state.pno;
-  //   await axios.get("http://localhost:3000/process/getaccesscode", {
-  //     params: {
-  //       phoneNumber: e,
-  //       channel: 'sms'
-  //     }
-  //   })
-  //       .then(data => console.log(data))
-  //       .catch(err => console.log(err));
-  // };
-  //
-  // _verifyCode = async () => {
-  //   const e = this.state.code+this.state.pno;
-  //   await axios.get("http://localhost:3000/process/validateaccesscode", {
-  //     params: {
-  //       phoneNumber: e,
-  //       code: this.state.otp
-  //     }
-  //   })
-  //       .then(data => console.log(data))
-  //       .catch(err => console.log(err));
-  // }
+  _getCode = async() => {
+    const pno = this.state.phoneNumber;
+    await axios.get("http://localhost:3000/process/getcode", {
+      params: {
+        phoneNumber: pno,
+        channel: 'sms'
+      }
+    })
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
+  };
+
+  _verifyCode = async () => {
+    const e = this.state.phoneNumber.value;
+    await axios.get("http://localhost:3000/process/validatecode", {
+      params: {
+        phoneNumber: e,
+        code: this.state.accessCode
+      }
+    })
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
+  }
 
   /** Change handler when update each input.*/
   changeHandler = event => {
     const phoneNumber = event.target.phoneNumber;
     const value = event.target.value;
-    const updatedControls = {
-      ...this.state.formControls
-    };
-    const updatedFormElement = {
-      ...updatedControls[name]
-    };
-    updatedFormElement.value = value;
-    updatedFormElement.touched = true;
-    updatedFormElement.valid = validate(value, updatedFormElement.validationRules);
-
-    updatedControls[name] = updatedFormElement;
-
-    this.setState({
-      formControls: updatedControls
-    });
   }
 
   /** Form submit handler. Send to Firebase to check, too.*/
@@ -87,9 +73,9 @@ class App extends Component {
     let pno = this.state.refs.phoneNumber.value;
     let code = this.state.refs.accessCode.value;
     if (!this.state.showCode) {
-      Firebase.handle(pno, null, this.state.showCode);
+      Database.handle(pno, null, this.state.showCode);
     } else {
-      Firebase.handle(pno.code, this.state.showCode)
+      Database.handle(pno.code, this.state.showCode)
     }
     console.dir(this.state.formControls);
   }
@@ -99,58 +85,94 @@ class App extends Component {
   /** HTML Render.*/
   render() {
     return (
-        <View style = {styles.container}>
-          <Text style = {styles.title}> Verify Your Phone Number </Text>
-          <Text style = {styles.text}> Phone number: </Text>
-          {!this.state.showCode ? <h3 style={{marginLeft: 10, color: '#9f9f9f'}}>αlpha</h3> : <IconButton onClick={() => {
-            this.setState({showCode: false, otp: ''}); //TODO: Set OTP on database to ''
-          }} size="small"><ArrowBackIcon /></IconButton>}
-          {this.state.showCode ? <h3>Enter Access Code</h3> : <h3>Enter your Phone Number</h3> }
-          {this.state.showCode ? <p>An Access Code has been sent to your phone Number (Twilio).</p> : null}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(160, 160, 160, 0.2)',
+          height: '100vh'
+        }}>
+          <Paper elevation={4} style={{ padding: 20, width: 600, marginBottom: 60}}>
+            <View style = {styles.container}>
+              <Text style = {styles.title}> Verify Your Phone Number </Text>
+              {!this.state.showCode ? <h3 style={{marginLeft: 10, color: '#9f9f9f'}}> by Emi Tran</h3> : <IconButton onClick={() => {
+                this.setState({showCode: false, otp: ''}); //TODO: Set OTP on database to ''
+              }} size="small"><ArrowBackIcon /></IconButton>}
+              {this.state.showCode ? <h3>Enter Access Code</h3> : <h3>Enter your Phone Number</h3> }
+              {this.state.showCode ? <p>An Access Code has been sent to your phone Number (Twilio).</p> : null}
 
-          {!this.state.showCode?
-              <TextInput type = "text"
-                         name = "phoneNumber"
-                         ref="phoneNumber"
-                         className="form-control"
-                         value={this.state.formControls.phoneNumber.value}
-                         onChange={this.changeHandler}
-                         style = {styles.textInput}
-                         underlineColorAndroid = "transparent"
-                         placeholder = "Enter your Phone Number"
-                         placeholderTextColor = "#9a73ef"/>
-                         :
-              <TextInput type = "text"
-                         name = "accessCode"
-                         ref="accessCode"
-                         className="form-control"
-                         value={this.state.formControls.accessCode.value}
-                         onChange={this.changeHandler}
-                         style = {styles.textInput}
-                         underlineColorAndroid = "transparent"
-                         placeholder = "Enter Access Code"
-                         placeholderTextColor = "#9a73ef"/>}
+              {!this.state.showCode?
+                  <TextField type = "text"
+                             name = "phoneNumber"
+                             ref="phoneNumber"
+                             value={this.state.phoneNumber.value}
+                             onChange={e => {
+                               if((e.target.value[e.target.value.length-1]>='0' && e.target.value[e.target.value.length-1]<='9') || !e.target.value) {
+                               this.setState({phoneNumber: e.target.value});
+                             }}}
+                             style = {styles.textInput}
+                             color="secondary"
+                             underlineColorAndroid = "transparent"
+                             placeholder = "Enter your Phone Number"
+                             placeholderTextColor = "#9a73ef"/>
+                  :
+                  <TextField type = "text"
+                             name = "accessCode"
+                             ref="accessCode"
+                             color="secondary"
+                             value={this.state.accessCode.value}
+                             onChange={e => {this.setState({code: e.target.value})}}
+                             style = {styles.textInput}
+                             underlineColorAndroid = "transparent"
+                             placeholder = "Enter Access Code"
+                             placeholderTextColor = "#9a73ef"/>}
+              {this.state.showCode ? <div style={{width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 5}}>
+                Didn't receive an Access Code?
+                <Button onClick={() => this._getCode()} color="primary" style={{textTransform: 'none', fontSize: 15}}>
+                  Resend OTP
+                </Button>
+              </div> : null }
 
-          <TouchableOpacity
-              style = {styles.submitButton}
-              onPress = {
-                //TODO: check parameters && Output result
-                !(this.state.showCode)? () => verifyController.CreateNewAccessCode :
-                    () => verifyController.ValidateAccessCode
-              }
-              onClick = {this.formSubmitHandler}>
-            {!this.state.showCode ?
-                <Text style = {styles.submitButtonText}> Submit </Text>
-                : <Text style = {styles.submitButtonText}> Verify </Text>}
-          </TouchableOpacity>
-        </View>
+              <div style={{display: 'flex', flexDirection: 'row', marginTop: 20}}>
+                <Button
+                    variant="contained"
+                    disabled= {(this.state.phoneNumber.length==0) ||
+                      (this.state.accessCode==null) ||
+                      !isNumeric(this.state.phoneNumber) ||
+                      (this.state.showCode && this.state.accessCode.length!==6)}
+                    color="secondary"
+                    style={{
+                      color: 'white',
+                      marginLeft: 'auto',
+                      textTransform: 'none'
+                    }}
+                    onClick={() => {
+                      if(this.state.showCode) {
+                        this._verifyCode();
+                      } else {
+                        this._getCode();
+                        this.setState({showCode: true});
+                      }
+                    }}>
+                  Verify
+                </Button>
+              </div>
+
+            </View>
+          </Paper>
+        </div>
+
     )
   }
 }
 
 
-
 export default App;
+
+function isNumeric(n) {
+  return !isNaN(parseInt(n)) && isFinite(n);
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -163,8 +185,8 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   title: {
-    color: 'red',
-    fontSize: 20
+    color: 'black',
+    fontSize: 35
   },
   submitButton: {
     backgroundColor: '#7a42f8',

@@ -11,9 +11,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de9f36e8-d08e-4322-9791-e6ac19032e94" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AppBackend.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/verify.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/firebase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/verifyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/verifyController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/verifyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/verifyController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/verify.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TextInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextInput.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +44,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JupyterTrust" id="33f1e656-074d-4c55-ad89-066133916cb6" />
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="ProjectId" id="1jfsykK44rN76MuDuEx3sEYkiJL" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -81,7 +97,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604206738475</updated>
-      <workItem from="1604208967029" duration="20680000" />
+      <workItem from="1604208967029" duration="31930000" />
     </task>
     <servers />
   </component>
@@ -90,6 +106,16 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -103,6 +129,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="384" y="209" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604248043930">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="384" y="209" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1604248043930" />
     <state x="128" y="0" key="SettingsEditor" timestamp="1604208432728">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -112,6 +142,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="240" y="140" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1604217502460" />
+    <state x="341" y="155" width="598" height="490" key="find.popup" timestamp="1604245925750">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="341" y="155" width="598" height="490" key="find.popup/0.0.1280.800@0.0.1280.800" timestamp="1604245925750" />
     <state x="34" y="23" key="new project wizard" timestamp="1604206923290">
       <screen x="0" y="23" width="1280" height="742" />
     </state>
@@ -120,9 +154,9 @@
       <screen x="0" y="23" width="1280" height="743" />
     </state>
     <state x="305" y="185" key="run.anything.popup/0.23.1280.743@0.23.1280.743" timestamp="1604217067417" />
-    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1604235485477">
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1604246662114">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1604235485477" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1604246662114" />
   </component>
 </project>

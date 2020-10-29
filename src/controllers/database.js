@@ -1,9 +1,9 @@
 import React from "react";
 import Firebase from "firebase";
-import config from "./config";
-import verifyController from "../controllers/verifyController";
+import config from "../config";
+import verifyController from "./verifyController";
 
-class Firebase extends React.Component {
+class Database extends React.Component {
     /** Firebase Constructor.*/
     constructor(props) {
         super(props);
@@ -80,5 +80,5 @@ const getAccessCode = (pno) => {
         }
     });
 };
-export default Firebase;
+export default Database;
 
